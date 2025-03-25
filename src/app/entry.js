@@ -11,7 +11,7 @@ async function getPortFromServer() {
 }
 
 async function main_app(socket){
-    console.log(socket);
+
 const canvas = document.querySelector('.canvas');
 const context = canvas.getContext('2d');
 const colorPalette = document.querySelector('.color');
