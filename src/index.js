@@ -46,6 +46,9 @@ app.get('/', (c) => {
   Userauth = c.get('authUser')
   return c.redirect('/canvas')
 })
+app.get('/api/get-port', (c) => {
+  return c.json({ port });
+});
 //サーバー
 const port = process.env.PORT || 3000;  
 console.log(`Server is running on http://localhost:${port}`);
@@ -116,6 +119,4 @@ if(await prisma.Map.count()!=canvasSize*canvasSize){
             });
           }}}};
 
-  app.get('/api/get-port', (c) => {
-            return c.json({ port });
-  });
+
