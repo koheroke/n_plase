@@ -24,3 +24,4 @@ canvas.get('/', (c) => {
     </html>`
   )
 })
+   //"dev": "node src/index.js",  
