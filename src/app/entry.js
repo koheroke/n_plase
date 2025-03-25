@@ -6,10 +6,12 @@ async function getPortFromServer() {
     const response = await fetch('/api/get-port');
     const data = await response.json();
     const port =data.port || 3000;
+    console.log("port"+port);
     return io(`http://localhost:${port}`);
 }
 
 async function main_app(socket){
+    console.log(socket);
 const canvas = document.querySelector('.canvas');
 const context = canvas.getContext('2d');
 const colorPalette = document.querySelector('.color');
@@ -78,7 +80,7 @@ if(cookies.getTime()<canvasInterval.getTime()){
     const statusString = JSON.stringify(mousePos);
     socket.emit('Canvaschanges', {statusString});
 }else{
-    alert(`一度塗ると${intervalTime}秒間塗ることはできません`);
+    alert(`一度塗ると${intervalTime}秒間再度塗ることはできません`);
 }
 }else{
     if(color==null){
