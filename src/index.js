@@ -47,13 +47,13 @@ app.get('/', (c) => {
   return c.redirect('/canvas')
 })
 //サーバー
-const port = process.env.PORT || 3000;
-console.log(`Server is running on http://localhost:${port}`)
+const port = process.env.PORT || 3000;  // Render環境に合わせてポートを設定
+console.log(`Server is running on http://localhost:${port}`);
 
 const server = serve({
   fetch: app.fetch,
-  port
-})
+  port: port  // ポートを指定してサーバーを起動
+});
 //websocket
 import { Server } from 'socket.io';
 const io = new Server(server);

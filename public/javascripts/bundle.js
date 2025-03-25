@@ -4523,7 +4523,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (color != null && userId != null) {
       var cookies = new Date(document.cookie);
       if (cookies == 'Invalid Date') {
-        cookies = 0;
+        cookies = new Date(0);
       }
       var canvasInterval = new Date();
       if (cookies.getTime() < canvasInterval.getTime()) {
@@ -4571,7 +4571,8 @@ document.addEventListener("DOMContentLoaded", function () {
   ;
 
   //websocket通信
-  var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])('http://localhost:3000');
+  var port = '3000';
+  var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])("http://localhost:".concat(port));
   socket.on("connect_error", function (error) {
     console.error("Socket.IO 接続エラー:", error);
   });

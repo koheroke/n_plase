@@ -54,7 +54,7 @@ if(color!=null&&userId!=null){
 
         let cookies =new Date(document.cookie);
         if(cookies=='Invalid Date'){
-            cookies=0;
+            cookies=new Date(0);
         }
         const canvasInterval = new Date();
 if(cookies.getTime()<canvasInterval.getTime()){
@@ -102,7 +102,8 @@ if(cookies.getTime()<canvasInterval.getTime()){
 
 
 //websocket通信
-    const socket = io('http://localhost:3000');
+const port = '3000';
+    const socket = io(`http://localhost:${port}`);
 
     socket.on("connect_error", (error) => {
         console.error("Socket.IO 接続エラー:", error);
