@@ -7,7 +7,8 @@ import { serveStatic } from '@hono/node-server/serve-static'
 import { secureHeaders } from 'hono/secure-headers'
 import { PrismaClient } from '@prisma/client'
 import Google from '@auth/core/providers/google'
-import 'dotenv/config'
+import dotenv from 'dotenv';
+dotenv.config();
 
 const prisma = new PrismaClient({
   log: ['query']
@@ -47,12 +48,11 @@ app.get('/', (c) => {
   return c.redirect('/canvas')
 })
 //サーバー 
-const port = process.env.PORT || 3000; 
+const port = process.env.PORT; //|| 3000; 
+console.log("aaaaa",port);
 app.get('/api/get-port', (c) => {
   return c.json({ port });
 });
-
-// Start the server after defining routes
 console.log(`Server is running on http://localhost:${port}`);
 
 const server = serve({

@@ -1,4 +1,5 @@
 npm install
+npm install dotenv
 npx prisma generate
 npx prisma db push
 npm install socket.io@4.7.5 socket.io-client@4.7.5
