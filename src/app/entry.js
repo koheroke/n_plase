@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", function() {
 async function getPortFromServer() {
     const response = await fetch('/api/get-port');
     const data = await response.json();
-    const port =data.port || 3000;
-    console.log("port"+port);
-    return io(`http://localhost:${port}`);
+    const port = data.port || 3000;  // 環境変数のポートがない場合は 3000 をデフォルトにする
+    console.log(`ポート番号: ${port}`);
+    return io(`http://localhost:${port}`);  // URL の文字列に変換して接続
 }
 
 async function main_app(socket){
