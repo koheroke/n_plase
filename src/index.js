@@ -57,8 +57,9 @@ console.log(`Server is running on http://localhost:${port}`);
 
 const server = serve({
   fetch: app.fetch,
-  port: port // Start the server with the specified port
+  port: port 
 });
+
 
 //websocket
 import { Server } from 'socket.io';

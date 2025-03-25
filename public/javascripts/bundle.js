@@ -4493,9 +4493,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
           case 5:
             data = _context2.sent;
-            port = data.port || 3000;
+            port = data.port || 3000; // 環境変数のポートがない場合は 3000 をデフォルトにする
+            console.log("\u30DD\u30FC\u30C8\u756A\u53F7: ".concat(port));
             return _context2.abrupt("return", (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])("http://localhost:".concat(port)));
-          case 8:
+          case 9:
           case "end":
             return _context2.stop();
         }
@@ -4592,7 +4593,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     statusString: statusString
                   });
                 } else {
-                  alert("\u4E00\u5EA6\u5857\u308B\u3068".concat(intervalTime, "\u79D2\u9593\u5857\u308B\u3053\u3068\u306F\u3067\u304D\u307E\u305B\u3093"));
+                  alert("\u4E00\u5EA6\u5857\u308B\u3068".concat(intervalTime, "\u79D2\u9593\u518D\u5EA6\u5857\u308B\u3053\u3068\u306F\u3067\u304D\u307E\u305B\u3093"));
                 }
               } else {
                 if (color == null) {

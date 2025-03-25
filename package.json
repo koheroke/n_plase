@@ -2,6 +2,8 @@
   "name": "n_plase",
   "type": "module",
   "main": "src/index.js",
+  "version": "1.0.0",
+  "description": "A Hono app with Render deployment",
   "scripts": {
     "start": "node src/index.js"
   },
