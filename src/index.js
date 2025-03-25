@@ -46,17 +46,20 @@ app.get('/', (c) => {
   Userauth = c.get('authUser')
   return c.redirect('/canvas')
 })
+//サーバー 
+const port = process.env.PORT || 3000; 
 app.get('/api/get-port', (c) => {
   return c.json({ port });
 });
-//サーバー
-const port = process.env.PORT || 3000;  
+
+// Start the server after defining routes
 console.log(`Server is running on http://localhost:${port}`);
 
 const server = serve({
   fetch: app.fetch,
-  port: port  // ポートを指定してサーバーを起動
+  port: port // Start the server with the specified port
 });
+
 //websocket
 import { Server } from 'socket.io';
 const io = new Server(server);
