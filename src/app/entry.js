@@ -2,6 +2,14 @@
 import io from 'socket.io-client';
 document.addEventListener("DOMContentLoaded", function() {
 //読み込まれた後に実行
+async function getPortFromServer() {
+    const response = await fetch('/api/get-port');
+    const data = await response.json();
+    const port =data.port || 3000;
+    return io(`http://localhost:${port}`);
+}
+
+async function main_app(socket){
 const canvas = document.querySelector('.canvas');
 const context = canvas.getContext('2d');
 const colorPalette = document.querySelector('.color');
@@ -102,26 +110,25 @@ if(cookies.getTime()<canvasInterval.getTime()){
 
 
 //websocket通信
-const port = '3000';
-    const socket = io(`http://localhost:${port}`);
 
-    socket.on("connect_error", (error) => {
-        console.error("Socket.IO 接続エラー:", error);
-    });
+socket.on("connect_error", (error) => {
+    console.error("Socket.IO 接続エラー:", error);
+});
 
-    socket.on("disconnect", () => {
-        console.log("Socket.IO 接続終了");
-    });
+socket.on("disconnect", () => {
+    console.log("Socket.IO 接続終了");
+});
 
-    socket.on('Canvaschanges',(data) => {
-        canvasUpdate(JSON.parse(data.statusString));
-    });
-    socket.on('canvasData',(data) => {
-        canvasLoad(JSON.parse(data));
-    });
-    socket.on('Useremail', (data) => {
-        userId=data.token.email;
-    });
+socket.on('Canvaschanges',(data) => {
+    canvasUpdate(JSON.parse(data.statusString));
+});
+socket.on('canvasData',(data) => {
+    canvasLoad(JSON.parse(data));
+});
+socket.on('Useremail', (data) => {
+    userId=data.token.email;
+});
+   
 //ボタン処理
 applyColorButton.addEventListener('click',async function() {
     color =await document.querySelector('.color').value;
@@ -129,8 +136,11 @@ applyColorButton.addEventListener('click',async function() {
 logoutButton.addEventListener('click',async function() {
     window.location.href = 'https://accounts.google.com/Logout';
 });
-
-
+}
+(async () => {
+    const socket = await getPortFromServer();
+    main_app(socket);
+})();
 });
 
 

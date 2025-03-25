@@ -4476,144 +4476,203 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 document.addEventListener("DOMContentLoaded", function () {
   //読み込まれた後に実行
-  var canvas = document.querySelector('.canvas');
-  var context = canvas.getContext('2d');
-  var colorPalette = document.querySelector('.color');
-  var applyColorButton = document.querySelector('.applyColorButton');
-  var logoutButton = document.querySelector('.logoutButton');
-  var canvasPosX = 10,
-    canvasPosY = 10;
-  var intervalTime = 10;
-  var width = window.innerWidth - 20;
-  var height = window.innerHeight - 20;
-  var canvasSize = 100;
-  var pixelsize = null;
-  var userId = null;
-  var color = null;
-  canvas.style.top = "100px";
-  canvas.style.top = canvasPosY + "px";
-  canvas.style.left = canvasPosX + "px";
-  //たて画面と横画面に対応
-  if (width < height) {
-    pixelsize = width / canvasSize;
-  } else {
-    pixelsize = height / canvasSize;
+  function getPortFromServer() {
+    return _getPortFromServer.apply(this, arguments);
   }
-  canvas.width = canvasSize * pixelsize;
-  canvas.height = canvasSize * pixelsize;
-  console.log(logoutButton.offsetWidth);
-  if (width < height) {
-    (colorPalette.style.top = canvas.height * 1.03) + "px";
-    colorPalette.style.top = canvas.height * 1.03 + "px";
-    applyColorButton.style.top = canvas.height * 1.03 + "px";
-    applyColorButton.style.left = colorPalette.offsetWidth * 2 + "px";
-    logoutButton.style.left = width - logoutButton.offsetWidth + "px";
-    logoutButton.style.top = canvas.height * 1.03 + "px";
-  } else {
-    colorPalette.style.left = canvas.width * 1.03 + "px";
-    applyColorButton.style.left = canvas.width * 1.03 + "px";
-    applyColorButton.style.top = colorPalette.offsetHeight * 2 + "px";
-    logoutButton.style.left = canvas.width * 1.03 + "px";
-    logoutButton.style.top = height - logoutButton.offsetHeight + "px";
+  function _getPortFromServer() {
+    _getPortFromServer = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var response, data, port;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return fetch('/api/get-port');
+          case 2:
+            response = _context2.sent;
+            _context2.next = 5;
+            return response.json();
+          case 5:
+            data = _context2.sent;
+            port = data.port || 3000;
+            return _context2.abrupt("return", (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])("http://localhost:".concat(port)));
+          case 8:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2);
+    }));
+    return _getPortFromServer.apply(this, arguments);
   }
-  //
-  document.querySelector('.canvas').onclick = function (event) {
-    var xpos = Math.floor((event.clientX - canvasPosX) / pixelsize);
-    var ypos = Math.floor((event.clientY - canvasPosY) / pixelsize);
-    if (color != null && userId != null) {
-      var cookies = new Date(document.cookie);
-      if (cookies == 'Invalid Date') {
-        cookies = new Date(0);
-      }
-      var canvasInterval = new Date();
-      if (cookies.getTime() < canvasInterval.getTime()) {
-        canvasInterval.setSeconds(canvasInterval.getSeconds() + intervalTime);
-        var expires = "expires=" + canvasInterval.toUTCString();
-        document.cookie = "username=".concat(canvasInterval, ";").concat(expires, " ; path=/canvas");
-        var mousePos = {
-          x: xpos,
-          y: ypos,
-          color: color
-        };
-        var statusString = JSON.stringify(mousePos);
-        socket.emit('Canvaschanges', {
-          statusString: statusString
-        });
-      } else {
-        alert("\u4E00\u5EA6\u5857\u308B\u3068".concat(intervalTime, "\u79D2\u9593\u5857\u308B\u3053\u3068\u306F\u3067\u304D\u307E\u305B\u3093"));
-      }
-    } else {
-      if (color == null) {
-        alert("色を選択してください");
-      } else {
-        alert("ログインされてません");
-      }
-    }
-    ;
-  };
-  function canvasUpdate(data) {
-    context.fillStyle = data.color;
-    context.fillRect(data.x * pixelsize, data.y * pixelsize, pixelsize, pixelsize);
+  function main_app(_x) {
+    return _main_app.apply(this, arguments);
   }
-  function canvasLoad(canvasData) {
-    var canvasLength = Math.sqrt(canvasData.length);
-    var num = 0;
-    console.log(canvasData[0].color);
-    for (var y = 0; y < canvasLength; y++) {
-      for (var x = 0; x < canvasLength; x++) {
-        var data = canvasData[num];
-        num++;
-        context.fillStyle = data.color;
-        context.fillRect(x * pixelsize, y * pixelsize, pixelsize, pixelsize);
-      }
-    }
-  }
-  ;
+  function _main_app() {
+    _main_app = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5(socket) {
+      var canvas, context, colorPalette, applyColorButton, logoutButton, canvasPosX, canvasPosY, intervalTime, width, height, canvasSize, pixelsize, userId, color, canvasUpdate, canvasLoad;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
+          case 0:
+            canvasLoad = function _canvasLoad(canvasData) {
+              var canvasLength = Math.sqrt(canvasData.length);
+              var num = 0;
+              console.log(canvasData[0].color);
+              for (var y = 0; y < canvasLength; y++) {
+                for (var x = 0; x < canvasLength; x++) {
+                  var data = canvasData[num];
+                  num++;
+                  context.fillStyle = data.color;
+                  context.fillRect(x * pixelsize, y * pixelsize, pixelsize, pixelsize);
+                }
+              }
+            };
+            canvasUpdate = function _canvasUpdate(data) {
+              context.fillStyle = data.color;
+              context.fillRect(data.x * pixelsize, data.y * pixelsize, pixelsize, pixelsize);
+            };
+            canvas = document.querySelector('.canvas');
+            context = canvas.getContext('2d');
+            colorPalette = document.querySelector('.color');
+            applyColorButton = document.querySelector('.applyColorButton');
+            logoutButton = document.querySelector('.logoutButton');
+            canvasPosX = 10, canvasPosY = 10;
+            intervalTime = 10;
+            width = window.innerWidth - 20;
+            height = window.innerHeight - 20;
+            canvasSize = 100;
+            pixelsize = null;
+            userId = null;
+            color = null;
+            canvas.style.top = "100px";
+            canvas.style.top = canvasPosY + "px";
+            canvas.style.left = canvasPosX + "px";
+            //たて画面と横画面に対応
+            if (width < height) {
+              pixelsize = width / canvasSize;
+            } else {
+              pixelsize = height / canvasSize;
+            }
+            canvas.width = canvasSize * pixelsize;
+            canvas.height = canvasSize * pixelsize;
+            console.log(logoutButton.offsetWidth);
+            if (width < height) {
+              (colorPalette.style.top = canvas.height * 1.03) + "px";
+              colorPalette.style.top = canvas.height * 1.03 + "px";
+              applyColorButton.style.top = canvas.height * 1.03 + "px";
+              applyColorButton.style.left = colorPalette.offsetWidth * 2 + "px";
+              logoutButton.style.left = width - logoutButton.offsetWidth + "px";
+              logoutButton.style.top = canvas.height * 1.03 + "px";
+            } else {
+              colorPalette.style.left = canvas.width * 1.03 + "px";
+              applyColorButton.style.left = canvas.width * 1.03 + "px";
+              applyColorButton.style.top = colorPalette.offsetHeight * 2 + "px";
+              logoutButton.style.left = canvas.width * 1.03 + "px";
+              logoutButton.style.top = height - logoutButton.offsetHeight + "px";
+            }
+            //
+            document.querySelector('.canvas').onclick = function (event) {
+              var xpos = Math.floor((event.clientX - canvasPosX) / pixelsize);
+              var ypos = Math.floor((event.clientY - canvasPosY) / pixelsize);
+              if (color != null && userId != null) {
+                var cookies = new Date(document.cookie);
+                if (cookies == 'Invalid Date') {
+                  cookies = new Date(0);
+                }
+                var canvasInterval = new Date();
+                if (cookies.getTime() < canvasInterval.getTime()) {
+                  canvasInterval.setSeconds(canvasInterval.getSeconds() + intervalTime);
+                  var expires = "expires=" + canvasInterval.toUTCString();
+                  document.cookie = "username=".concat(canvasInterval, ";").concat(expires, " ; path=/canvas");
+                  var mousePos = {
+                    x: xpos,
+                    y: ypos,
+                    color: color
+                  };
+                  var statusString = JSON.stringify(mousePos);
+                  socket.emit('Canvaschanges', {
+                    statusString: statusString
+                  });
+                } else {
+                  alert("\u4E00\u5EA6\u5857\u308B\u3068".concat(intervalTime, "\u79D2\u9593\u5857\u308B\u3053\u3068\u306F\u3067\u304D\u307E\u305B\u3093"));
+                }
+              } else {
+                if (color == null) {
+                  alert("色を選択してください");
+                } else {
+                  alert("ログインされてません");
+                }
+              }
+              ;
+            };
+            ;
 
-  //websocket通信
-  var port = '3000';
-  var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__["default"])("http://localhost:".concat(port));
-  socket.on("connect_error", function (error) {
-    console.error("Socket.IO 接続エラー:", error);
-  });
-  socket.on("disconnect", function () {
-    console.log("Socket.IO 接続終了");
-  });
-  socket.on('Canvaschanges', function (data) {
-    canvasUpdate(JSON.parse(data.statusString));
-  });
-  socket.on('canvasData', function (data) {
-    canvasLoad(JSON.parse(data));
-  });
-  socket.on('Useremail', function (data) {
-    userId = data.token.email;
-  });
-  //ボタン処理
-  applyColorButton.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+            //websocket通信
+
+            socket.on("connect_error", function (error) {
+              console.error("Socket.IO 接続エラー:", error);
+            });
+            socket.on("disconnect", function () {
+              console.log("Socket.IO 接続終了");
+            });
+            socket.on('Canvaschanges', function (data) {
+              canvasUpdate(JSON.parse(data.statusString));
+            });
+            socket.on('canvasData', function (data) {
+              canvasLoad(JSON.parse(data));
+            });
+            socket.on('Useremail', function (data) {
+              userId = data.token.email;
+            });
+
+            //ボタン処理
+            applyColorButton.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+              return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+                while (1) switch (_context3.prev = _context3.next) {
+                  case 0:
+                    _context3.next = 2;
+                    return document.querySelector('.color').value;
+                  case 2:
+                    color = _context3.sent;
+                  case 3:
+                  case "end":
+                    return _context3.stop();
+                }
+              }, _callee3);
+            })));
+            logoutButton.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+              return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+                while (1) switch (_context4.prev = _context4.next) {
+                  case 0:
+                    window.location.href = 'https://accounts.google.com/Logout';
+                  case 1:
+                  case "end":
+                    return _context4.stop();
+                }
+              }, _callee4);
+            })));
+          case 32:
+          case "end":
+            return _context5.stop();
+        }
+      }, _callee5);
+    }));
+    return _main_app.apply(this, arguments);
+  }
+  _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var socket;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return document.querySelector('.color').value;
+          return getPortFromServer();
         case 2:
-          color = _context.sent;
-        case 3:
+          socket = _context.sent;
+          main_app(socket);
+        case 4:
         case "end":
           return _context.stop();
       }
     }, _callee);
-  })));
-  logoutButton.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
-        case 0:
-          window.location.href = 'https://accounts.google.com/Logout';
-        case 1:
-        case "end":
-          return _context2.stop();
-      }
-    }, _callee2);
-  })));
+  }))();
 });
 })();
 

@@ -47,7 +47,7 @@ app.get('/', (c) => {
   return c.redirect('/canvas')
 })
 //サーバー
-const port = process.env.PORT || 3000;  // Render環境に合わせてポートを設定
+const port = process.env.PORT || 3000;  
 console.log(`Server is running on http://localhost:${port}`);
 
 const server = serve({
@@ -115,3 +115,7 @@ if(await prisma.Map.count()!=canvasSize*canvasSize){
               },
             });
           }}}};
+
+  app.get('/api/get-port', (c) => {
+            return c.json({ port });
+  });

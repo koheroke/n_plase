@@ -2,7 +2,7 @@
   "name": "n_plase",
   "type": "module",
   "scripts": {
-   "start": "node src/index.js"   
+    "start": "node src/index.js"
   },
   "dependencies": {
     "@auth/core": "^0.38.0",
