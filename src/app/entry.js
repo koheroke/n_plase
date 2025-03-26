@@ -2,11 +2,7 @@
 import io from 'socket.io-client';
 document.addEventListener("DOMContentLoaded", function() {
 //読み込まれた後に実行
-async function getPortFromServer() {
-    const response = await fetch('/api/get-port');
-    const data = await response.json();
-    const port = data.port || 3000;  // 環境変数のポートがない場合は 3000 をデフォルトにする
-    console.log(`ポート番号: ${port}`);
+async function getPortFromServer() { 
     return io(`https://n-plase.onrender.com`);  // URL の文字列に変換して接続
 }
 
@@ -136,6 +132,7 @@ applyColorButton.addEventListener('click',async function() {
     color =await document.querySelector('.color').value;
 });
 logoutButton.addEventListener('click',async function() {
+    await fetch('/logout');
     window.location.href = 'https://accounts.google.com/Logout';
 });
 }

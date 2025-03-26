@@ -47,8 +47,10 @@ app.get('/', (c) => {
   Userauth = c.get('authUser')
   return c.redirect('/canvas')
 })
-app.get('/api/get-port', (c) => {
-  return c.json({ port });
+
+app.get('/logout', (c) => {
+  const session = c.get('session');
+  session.destroy();
 });
 
 const port = process.env.PORT || 3000; 
