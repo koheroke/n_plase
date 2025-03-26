@@ -47,11 +47,11 @@ app.get('/', (c) => {
   Userauth = c.get('authUser')
   return c.redirect('/canvas')
 })
-//サーバー 
-const port =3000; 
 app.get('/api/get-port', (c) => {
   return c.json({ port });
 });
+
+const port = process.env.PORT || 3000; 
 console.log(`Server is running on http://localhost:${port}`);
 
 const server = serve({
