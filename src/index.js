@@ -15,11 +15,11 @@ const prisma = new PrismaClient({
 });
 //Hono設定
 const app = new Hono();
+app.use(serveStatic({ root: "./public" }));
 app.use('*', secureHeaders())
 //ルーター
 app.route('/canvas', canvas)
 //アカウント認証
-app.use(serveStatic({ root: "./public" }));
 app.use(
   '*',
   initAuthConfig((c) => ({
@@ -48,8 +48,7 @@ app.get('/', (c) => {
   return c.redirect('/canvas')
 })
 //サーバー 
-const port = process.env.PORT; //|| 3000; 
-console.log("aaaaa",port);
+const port =3000; 
 app.get('/api/get-port', (c) => {
   return c.json({ port });
 });
