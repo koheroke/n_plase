@@ -51,7 +51,7 @@ app.get('/api/get-port', (c) => {
   return c.json({ port });
 });
 
-const port = process.env.PORT; 
+const port = process.env.PORT || 3000; 
 console.log(`Server is running on http://localhost:${port}`);
 
 const server = serve({
